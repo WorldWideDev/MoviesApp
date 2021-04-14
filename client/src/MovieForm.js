@@ -1,4 +1,5 @@
 import './MovieForm.css';
+import axios from 'axios';
 import {useState} from 'react';
 const INITIAL_MOVIE_STATE = {
     title: '',
@@ -8,6 +9,7 @@ const INITIAL_MOVIE_STATE = {
 }
 const RATINGS = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated'];
 const MovieForm = (props) => {
+    const {onSubmitProp} = props;
     const [movie, setMovie] = useState({...INITIAL_MOVIE_STATE});
     const {title, genre, releaseDate, rating} = movie;
     function onInputChanged(field, value) {
@@ -15,13 +17,13 @@ const MovieForm = (props) => {
         tempMovieState[field] = value;
         setMovie(tempMovieState);
     }
-    function onFormSubmit(e) {
+    function onSubmitHandler(e) {
         e.preventDefault();
-        // do stuff
+        onSubmitProp(movie);
         setMovie({...INITIAL_MOVIE_STATE});
     }
     return (
-        <form onSubmit={(e)=>onFormSubmit(e)}>
+        <form onSubmit={onSubmitHandler}>
             <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input className="form-control" type="text" id="title" value={title} onChange={(e) => onInputChanged('title', e.target.value)} />

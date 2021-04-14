@@ -12,15 +12,21 @@ function App() {
         axios.get("http://localhost:3030/api")
             .then(res => setMovies(res.data));
     }, []);
+    const createMovie = (movie) => {
+        axios.post('http://localhost:3030/api', movie)
+            .then(res => {
+                setMovies([...movies, res.data]);
+            })
+            .catch(err => console.log(err));
+    }
     return (
         <div className="container">
             <h1 className="main-title">Dojo Movies</h1>
             <main>
                 <section>
-                    <MovieForm />
+                    <MovieForm onSubmitProp={createMovie}/>
                 </section>
                 <section className="movies">
-                    <GenreToggle genres={["Action", "Romance", "Horror"]}/>
                     <MovieTable movies={movies}/>
                 </section>
             </main>
