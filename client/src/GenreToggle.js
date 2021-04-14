@@ -5,7 +5,7 @@ const GenreToggle = (props) => {
         <nav className="genre-nav">
             {genres.map((genre, i) => {
                 return (
-                    <button class="btn btn-warning">{genre}</button>
+                    <button key={i} className="btn btn-warning">{genre}</button>
                 )
             })}
         </nav>
