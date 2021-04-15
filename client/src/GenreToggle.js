@@ -1,6 +1,8 @@
 import './GenreToggle.css';
 const GenreToggle = (props) => {
     const { genres } = props;
+    // useEffect could do some cool things here 
+    // useEffect(callback, [state, state])
     return (
         <nav className="genre-nav">
             {genres.map((genre, i) => {

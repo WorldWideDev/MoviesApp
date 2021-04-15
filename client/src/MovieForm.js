@@ -1,5 +1,4 @@
 import './MovieForm.css';
-import axios from 'axios';
 import {useState} from 'react';
 const INITIAL_MOVIE_STATE = {
     title: '',
@@ -13,9 +12,10 @@ const MovieForm = (props) => {
     const [movie, setMovie] = useState({...INITIAL_MOVIE_STATE});
     const {title, genre, releaseDate, rating} = movie;
     function onInputChanged(field, value) {
-        let tempMovieState = {...movie};
-        tempMovieState[field] = value;
-        setMovie(tempMovieState);
+        setMovie({ ...movie, [field]:value});
+        // let tempMovieState = {...movie};
+        // tempMovieState[field] = value;
+        // setMovie(tempMovieState);
     }
     function onSubmitHandler(e) {
         e.preventDefault();
