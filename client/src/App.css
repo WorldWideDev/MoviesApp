@@ -12,15 +12,16 @@ main {
 }
 main > section {
     flex: 1;
+    margin: .8em;
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 750px){
     main {
         flex-direction: column;
     }
 }
 
-@media screen and (min-width: 700px){
+@media screen and (min-width: 751px){
     main {
         flex-direction: row;
     }

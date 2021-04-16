@@ -20,7 +20,7 @@ function App() {
             .catch(err => console.log(err));
     }
     return (
-        <div className="container">
+        <div className="">
             <h1 className="main-title">Dojo Movies</h1>
             <main>
                 <section>
