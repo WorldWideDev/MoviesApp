@@ -33,17 +33,15 @@ module.exports = {
     update: (req, res) => {
         console.log("PUT:/{id}");
         const { title, releaseDate, rating, genre } = req.body;
-        Movie.findOneAndUpdate(
-            { _id: req.params.id },
-            req.body,
-            { new:true, runValidators: true }
-        )
+        Movie.findByIdAndUpdate(req.params.id, req.body, { 
+            new:true, runValidators: true 
+        })
             .then(movie => res.json(movie))
             .catch(err => res.json(err));
     },
     delete: (req, res) => {
-        Movie.deleteOne({ _id: req.params.id })
-            .then(confirmation => res.json({...confirmation, id:req.params.id}))
+        Movie.findByIdAndDelete(req.params.id)
+            .then(movie => res.json({id:movie._id}))
             .catch(err => res.json(err));
     }
 }    

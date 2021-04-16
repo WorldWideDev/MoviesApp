@@ -17,9 +17,10 @@ require('./config/mongoose.config.js');
 require('./routes/movie.routes')(app);
 
 // seed data if db is empty
-Movie.count({}, (err, count) => {
-    console.log(`seeding data? ${count} records found`);
-    if(count < 1) {
+Movie.estimatedDocumentCount((err, count) => {
+    console.log(`checking to seed data: ${count} records found`);
+    if(err) { console.log(err) }
+    else if(count < 1) {
         Movie.insertMany(seedData)
             .then(movies => console.log(movies))
             .catch(err => console.log(err));
