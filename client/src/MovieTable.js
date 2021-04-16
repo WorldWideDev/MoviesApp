@@ -1,3 +1,4 @@
+import { Link } from '@reach/router';
 const getFormattedDate = (date) => new Date(date).toLocaleDateString();
 const MovieTable = (props) => {
     let { movies } = props;
@@ -15,7 +16,7 @@ const MovieTable = (props) => {
             {movies.map((movie, i) => {
                 return (
                 <tr key={movie._id}>
-                    <td>{ movie.title }</td>
+                    <td><Link to={`/movies/${ movie._id }`}>{ movie.title }</Link></td>
                     <td>{ movie.rating }</td>
                     <td>{ getFormattedDate(movie.releaseDate) }</td>
                     <td>{ movie.genre }</td>

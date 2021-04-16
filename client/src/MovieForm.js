@@ -1,15 +1,22 @@
 import './MovieForm.css';
 import {useState} from 'react';
+const getFormReadyDate = (date=null) => {
+    return new Date(date).toISOString().split('T')[0];
+}
 const INITIAL_MOVIE_STATE = {
     title: '',
     genre: '',
-    releaseDate: new Date().toISOString().split('T')[0],
+    releaseDate: getFormReadyDate(),
     rating: ''
 }
 const RATINGS = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated'];
 const MovieForm = (props) => {
+    const initialState = (props.movie === null)
+        ? INITIAL_MOVIE_STATE
+        : {...props.movie, releaseDate:getFormReadyDate(props.movie.releaseDate)};
+    const { action } = props;
     const {onSubmitProp} = props;
-    const [movie, setMovie] = useState({...INITIAL_MOVIE_STATE});
+    const [movie, setMovie] = useState({...initialState});
     const {title, genre, releaseDate, rating} = movie;
     function onInputChanged(field, value) {
         setMovie({ ...movie, [field]:value});
