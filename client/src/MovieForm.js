@@ -1,4 +1,5 @@
 import './MovieForm.css';
+import { navigate } from '@reach/router';
 import {useState} from 'react';
 const getFormReadyDate = (date=null) => {
     return new Date(date).toISOString().split('T')[0];
@@ -11,7 +12,7 @@ const INITIAL_MOVIE_STATE = {
 }
 const RATINGS = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated'];
 const MovieForm = (props) => {
-    const initialState = (props.movie === null)
+    const initialState = (props.movie === undefined)
         ? INITIAL_MOVIE_STATE
         : {...props.movie, releaseDate:getFormReadyDate(props.movie.releaseDate)};
     const { action } = props;
@@ -20,14 +21,12 @@ const MovieForm = (props) => {
     const {title, genre, releaseDate, rating} = movie;
     function onInputChanged(field, value) {
         setMovie({ ...movie, [field]:value});
-        // let tempMovieState = {...movie};
-        // tempMovieState[field] = value;
-        // setMovie(tempMovieState);
     }
     function onSubmitHandler(e) {
         e.preventDefault();
         onSubmitProp(movie);
         setMovie({...INITIAL_MOVIE_STATE});
+        navigate('/');
     }
     return (
         <form onSubmit={onSubmitHandler}>

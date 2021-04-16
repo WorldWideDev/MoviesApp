@@ -29,6 +29,16 @@ function App() {
             })
             .catch(err => console.log(err));
     }
+    const deleteHandler = (id) => {
+        axios.delete(`http://localhost:3030/api/${id}`)
+            .then((res) => {
+                const updatedMovieSet = movies.filter(m => m._id !== res.data.id);
+                setMovies([...movies, updatedMovieSet]);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
     return (
         <div className="">
             <h1 className="main-title">Dojo Movies</h1>
@@ -36,7 +46,7 @@ function App() {
             <Router>
                 <MovieTable movies={movies} default />
                 <MovieForm action={'post'} onSubmitProp={createMovie} path="/movies/new" />
-                <MovieDetails onSubmitProp={updateMovie} path="/movies/:id"/>
+                <MovieDetails onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
             </Router>
         </div>
     )
