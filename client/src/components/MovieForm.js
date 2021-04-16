@@ -29,7 +29,7 @@ const MovieForm = (props) => {
         navigate('/');
     }
     return (
-        <form onSubmit={onSubmitHandler}>
+        <form onSubmit={(e) => onSubmitHandler(e)}>
             <div className="form-group">
                 <label htmlFor="title">Title</label>
                 <input className="form-control" type="text" id="title" value={title} onChange={(e) => onInputChanged('title', e.target.value)} />

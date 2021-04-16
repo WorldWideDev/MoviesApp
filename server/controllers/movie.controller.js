@@ -4,8 +4,6 @@ module.exports = {
         console.log("GET:/")
         Movie.find({})
             .then((movies) => {
-                console.log("found some movies!");
-                console.log(movies);
                 res.json(movies);
             })
             .catch((err) => {
@@ -25,8 +23,6 @@ module.exports = {
         console.log("GET:/{id}")
         Movie.findById(req.params.id)
             .then((movie) => {
-                console.log("found one movie!");
-                console.log(movie);
                 res.json(movie);
             })
             .catch((err) => {
@@ -35,6 +31,7 @@ module.exports = {
             });
     },
     update: (req, res) => {
+        console.log("PUT:/{id}");
         const { title, releaseDate, rating, genre } = req.body;
         Movie.findOneAndUpdate(
             { _id: req.params.id },
