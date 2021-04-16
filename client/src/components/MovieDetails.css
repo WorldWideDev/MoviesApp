@@ -8,3 +8,7 @@
 .movie-details-card p {
     color: #CACACA;
 }
+.movie-details-card blockquote {
+    font-style: italic;
+    color: #CACACA;
+}

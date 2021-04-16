@@ -48,6 +48,7 @@ const MovieDetails = (props) => {
                 <p><strong>Rated:</strong> {movie.rating}</p>
                 <p><strong>Genre:</strong> {movie.genre}</p>
                 <p><strong>Release Date:</strong> { new Date(movie.releaseDate).toLocaleDateString("en-us")}</p>
+                <blockquote>{ movie.plot }</blockquote>
             </section>
             { renderConditionalEdit() } 
             <hr />

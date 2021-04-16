@@ -18,6 +18,9 @@ const MovieSchema = new mongoose.Schema({
     genre: {
         type: String,
         required: [ true, "Genre is required" ],
+    },
+    plot: {
+        type: String
     }
 }, { timestamps: true });
 

@@ -19,5 +19,13 @@
         "releaseDate": "17 Feb 1989",
         "genre": "Adventure, Comedy, Music, Romance, Sci-Fi",
         "plot": "Two seemingly dumb teens set off on a quest to prepare the ultimate historical presentation with the help of a time machine."
+    },
+    {
+        "title": "Dead Alive",
+        "year": "1992",
+        "rating": "R",
+        "releaseDate": "12 Feb 1993",
+        "genre": "Comedy, Fantasy, Horror, Thriller",
+        "plot": "A young man's mother is bitten by a Sumatran rat-monkey. She gets sick and dies, at which time she comes back to life, killing and eating dogs, nurses, friends, and neighbors."
     }
 ]
