@@ -17,7 +17,7 @@ module.exports = {
             title, releaseDate, rating, genre
         })
             .then(movie => res.json(movie))
-            .catch(err => res.json(err));
+            .catch(err => res.status(400).json(err));
     },
     getOne: (req, res) => {
         console.log("GET:/{id}")
@@ -27,7 +27,7 @@ module.exports = {
             })
             .catch((err) => {
                 console.log("error found in getting movies");
-                res.sendStatus(404);
+                res.status(404).json(err);
             });
     },
     update: (req, res) => {
@@ -39,7 +39,7 @@ module.exports = {
             { new:true, runValidators: true }
         )
             .then(movie => res.json(movie))
-            .catch(err => res.json(err));
+            .catch(err => res.status(400).json(err));
     },
     delete: (req, res) => {
         Movie.deleteOne({ _id: req.params.id })
