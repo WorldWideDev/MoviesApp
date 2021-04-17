@@ -6,10 +6,9 @@ import MovieForm from './MovieForm.js';
 import axios from 'axios';
 
 const MovieDetails = (props) => {
-    const { id, onSubmitProp, onDeleteProp } = props;
+    const { id, onSubmitProp, onDeleteProp, errors } = props;
     const [movie, setMovie] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
-    console.log(API_URI);
     useEffect(() => {
         axios.get(`${API_URI}/${id}`)
             .then((res) => {
@@ -30,7 +29,7 @@ const MovieDetails = (props) => {
         return (isEditing)
             ? (
                 <div>
-                    <MovieForm movie={movie} onSubmitProp={onSubmitProp}></MovieForm>
+                    <MovieForm movie={movie} errors={errors} onSubmitProp={onSubmitProp}></MovieForm>
                     <button 
                         onClick={() => setIsEditing(false)}
                         className="btn btn-warning">Cancel</button>

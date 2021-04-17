@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { Router } from '@reach/router';
+import { Router, navigate } from '@reach/router';
 import API_URI from '../utilities/apiUtils.js';
 import Navigation from './Navigation.js';
 import MovieForm from './MovieForm.js';
@@ -19,29 +19,42 @@ const moviesAreSame = (movieA, movieB) => {
     )
 }
 function App() {
-
+    console.log("app is rendered");
     const [movies, setMovies] = useState([]);
+    const [errors, setErrors] = useState([]);
     useEffect(() => {
         axios.get(API_URI)
             .then(res => setMovies(res.data));
     }, []);
     const updateMovie = (movie) => {
         const idx = movies.findIndex(m => m._id === movie._id);
-        if(moviesAreSame(movie, movies[idx])) { return; }
+        if(moviesAreSame(movie, movies[idx])) { 
+            setErrors([]);
+            navigate('/');
+            return; 
+        }
         axios.put(`${API_URI}/${movie._id}`, movie)
             .then(res => {
                 const updatedMovies = [...movies];
                 updatedMovies[idx] = movie;
+                setErrors([]);
                 setMovies(updatedMovies);
+                navigate('/');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setErrors(err.response.data.errors);
+            });
     }
     const createMovie = (movie) => {
         axios.post(API_URI, movie)
             .then(res => {
                 setMovies([...movies, res.data]);
+                setErrors([]);
+                navigate('/');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                setErrors(err.response.data.errors);
+            });
     }
     const deleteHandler = (id) => {
         axios.delete(`${API_URI}/${id}`)
@@ -58,8 +71,8 @@ function App() {
             <Navigation />
             <Router>
                 <MovieTable movies={movies} default />
-                <MovieForm onSubmitProp={createMovie} path="/movies/new" />
-                <MovieDetails onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
+                <MovieForm errors={errors} onSubmitProp={createMovie} path="/movies/new" />
+                <MovieDetails errors={errors} onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
             </Router>
         </div>
     )
