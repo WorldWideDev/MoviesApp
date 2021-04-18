@@ -1,4 +1,3 @@
-import './Navigation.css';
 import { Link } from '@reach/router';
 
 const Navigation = () => {

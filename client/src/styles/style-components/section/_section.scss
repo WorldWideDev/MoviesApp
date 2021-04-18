@@ -1,0 +1,10 @@
+section {
+    & > h1 {
+        color: $color-accent-dark;
+    }
+}
+.movie-details-card {
+    & strong {
+        color: $color-accent-secondary-dark;
+    }
+}

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import Typography from 'typography';
+import funstonTheme from 'typography-theme-funston';
 import { useState, useEffect } from 'react';
 import { Router, navigate } from '@reach/router';
 import API_URI from '../utilities/apiUtils.js';
@@ -6,8 +8,9 @@ import Navigation from './Navigation.js';
 import MovieForm from './MovieForm.js';
 import MovieDetails from './MovieDetails.js';
 import MovieTable from './MovieTable.js';
-import './App.css';
+import '../styles/_main.scss';
 
+const typography = new Typography(funstonTheme);
 const moviesAreSame = (movieA, movieB) => {
     console.log(movieA, movieB);
     return (
@@ -15,11 +18,11 @@ const moviesAreSame = (movieA, movieB) => {
         movieA.title === movieB.title &&
         movieA.releaseDate.split('T')[0] === movieB.releaseDate.split('T')[0] &&
         movieA.genre === movieB.genre &&
+        movieA.plot === movieB.plot &&
         movieA.rating === movieB.rating
     )
 }
 function App() {
-    console.log("app is rendered");
     const [movies, setMovies] = useState([]);
     const [errors, setErrors] = useState([]);
     useEffect(() => {
@@ -67,7 +70,10 @@ function App() {
     }
     return (
         <div className="">
-            <h1 className="main-title">Dojo Movies</h1>
+            <header>
+            { typography.injectStyles() }
+                <h1 className="main-title">Dojo Movies</h1>
+            </header>
             <Navigation />
             <Router>
                 <MovieTable movies={movies} default />

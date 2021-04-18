@@ -1,4 +1,3 @@
-import './GenreToggle.css';
 const GenreToggle = (props) => {
     const { genres } = props;
     // useEffect could do some cool things here 

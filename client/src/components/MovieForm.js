@@ -1,4 +1,3 @@
-import './MovieForm.css';
 import { navigate } from '@reach/router';
 import {useState} from 'react';
 const getFormReadyDate = (date=null) => {
@@ -8,6 +7,7 @@ const getFormReadyDate = (date=null) => {
 const INITIAL_MOVIE_STATE = {
     title: '',
     genre: '',
+    plot: '',
     releaseDate: getFormReadyDate(),
     rating: ''
 }
@@ -17,9 +17,9 @@ const MovieForm = (props) => {
     const initialState = (props.movie === undefined)
         ? INITIAL_MOVIE_STATE
         : {...props.movie, releaseDate:getFormReadyDate(props.movie.releaseDate)};
-    const { errors, onSubmitProp } = props;
+    const { errors, onSubmitProp, children } = props;
     const [movie, setMovie] = useState({...initialState});
-    const {title, genre, releaseDate, rating} = movie;
+    const {title, genre, releaseDate, rating, plot} = movie;
     function onInputChanged(field, value) {
         setMovie({ ...movie, [field]:value});
     }
@@ -51,7 +51,13 @@ const MovieForm = (props) => {
                 <span className="error">{ errors?.rating?.message }</span>
                 <input className="form-control" type="text" id="rating" value={rating} onChange={(e) => onInputChanged('rating', e.target.value)} />
             </div>
+            <div className="form-group">
+                <label htmlFor="plot">Plot</label>
+                <span className="error">{ errors?.plot?.message }</span>
+                <textarea className="form-control" type="text" id="plot" value={plot} onChange={(e) => onInputChanged('plot', e.target.value)}></textarea>
+            </div>
             <button type="submit" className="btn btn-primary">Send</button>
+            { children }
         </form>
     )
 }

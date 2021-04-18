@@ -12,9 +12,9 @@ module.exports = {
             })
     },
     create: (req, res) => {
-        const { title, releaseDate, rating, genre } = req.body;
+        const { title, releaseDate, rating, genre, plot } = req.body;
         Movie.create({
-            title, releaseDate, rating, genre
+            title, releaseDate, rating, genre, plot
         })
             .then(movie => res.json(movie))
             .catch(err => res.status(400).json(err));
@@ -32,7 +32,7 @@ module.exports = {
     },
     update: (req, res) => {
         console.log("PUT:/{id}");
-        const { title, releaseDate, rating, genre } = req.body;
+        const { title, releaseDate, rating, genre, plot } = req.body;
         Movie.findByIdAndUpdate(req.params.id, req.body, { 
             new:true, runValidators: true 
         })

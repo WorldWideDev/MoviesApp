@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from 'react';
 import { navigate } from '@reach/router';
-import './MovieDetails.css'
 import API_URI from '../utilities/apiUtils.js';
 import MovieForm from './MovieForm.js';
 import axios from 'axios';
@@ -25,37 +24,37 @@ const MovieDetails = (props) => {
         onDeleteProp(movie._id);
         navigate('/');
     }
-    const renderConditionalEdit = () =>{
+    const renderConditionalEdit = () => {
         return (isEditing)
             ? (
-                <div>
-                    <MovieForm movie={movie} errors={errors} onSubmitProp={onSubmitProp}></MovieForm>
-                    <button 
-                        onClick={() => setIsEditing(false)}
-                        className="btn btn-warning">Cancel</button>
-                </div>
+                <section>
+                    <MovieForm movie={movie} errors={errors} onSubmitProp={onSubmitProp}>
+                        <button 
+                            onClick={() => setIsEditing(false)}
+                            className="btn btn-warning">Cancel</button>
+                    </MovieForm>
+                </section>
             )
-            : (<button 
-                onClick={() => setIsEditing(true)}
-                className="btn btn-warning">Edit</button>);
+            : (
+                <section className="movie-details-card">
+                    <h1>{ movie.title }</h1>     
+                    <p><strong>Rated:</strong> {movie.rating}</p>
+                    <p><strong>Genre:</strong> {movie.genre}</p>
+                    <p><strong>Release Date:</strong> { new Date(movie.releaseDate).toLocaleDateString("en-us")}</p>
+                    <blockquote>{ movie.plot }</blockquote>
+                    <button 
+                        onClick={() => setIsEditing(true)}
+                        className="btn btn-warning">Edit</button>
+                    <button 
+                        onClick={deleteHandler}
+                        className="btn btn-danger">Delete</button>
+                </section>
+            );
     }
-    return (movie === null) ? <h1>...loading...</h1>
-    :(
-        <div>
-            <section className="movie-details-card">
-                <h1>{ movie.title }</h1>     
-                <p><strong>Rated:</strong> {movie.rating}</p>
-                <p><strong>Genre:</strong> {movie.genre}</p>
-                <p><strong>Release Date:</strong> { new Date(movie.releaseDate).toLocaleDateString("en-us")}</p>
-                <blockquote>{ movie.plot }</blockquote>
-            </section>
-            { renderConditionalEdit() } 
-            <hr />
-            <button 
-                onClick={deleteHandler}
-                className="btn btn-danger">Delete</button>
-        </div>
-     )
+    return (movie === null) 
+        ? <h1>...loading...</h1>
+        : renderConditionalEdit();
+        
 }
 
 export default MovieDetails;

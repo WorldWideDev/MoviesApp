@@ -6,10 +6,10 @@ const MovieTable = (props) => {
         <table className="table table-dark table-striped">
             <thead>
                 <tr>
-                    <td>Title</td>
-                    <td>Rating</td>
-                    <td>Release Date</td>
-                    <td>Genre</td>
+                    <th>Title</th>
+                    <th>Rating</th>
+                    <th>Release Date</th>
+                    <th>Genre</th>
                 </tr>
             </thead>
             <tbody>
