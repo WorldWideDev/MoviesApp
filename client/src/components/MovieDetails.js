@@ -37,11 +37,18 @@ const MovieDetails = (props) => {
             )
             : (
                 <section className="movie-details-card">
-                    <h1>{ movie.title }</h1>     
-                    <p><strong>Rated:</strong> {movie.rating}</p>
-                    <p><strong>Genre:</strong> {movie.genre}</p>
-                    <p><strong>Release Date:</strong> { new Date(movie.releaseDate).toLocaleDateString("en-us")}</p>
-                    <blockquote>{ movie.plot }</blockquote>
+                    <div>
+                        <main>
+                            <h1>{ movie.title }</h1>     
+                            <p><strong>Rated:</strong> {movie.rating}</p>
+                            <p><strong>Genre:</strong> {movie.genre}</p>
+                            <p><strong>Release Date:</strong> { new Date(movie.releaseDate).toLocaleDateString("en-us")}</p>
+                            <blockquote>{ movie.plot }</blockquote>
+                        </main>
+                        <aside>
+                            <img src={movie.movieUrl} alt={movie.title} />
+                        </aside>
+                    </div>
                     <button 
                         onClick={() => setIsEditing(true)}
                         className="btn btn-warning">Edit</button>

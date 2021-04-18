@@ -4,6 +4,20 @@ section {
     }
 }
 .movie-details-card {
+    & > div {
+        display: flex;
+        justify-content: space-between;
+
+        & > * {
+            flex: 1;
+        }
+        & > aside > img {
+            display: block;
+            margin: 0 auto;
+            height: 80vh;
+            border: solid 1px $color-accent-dark;
+        }
+    }
     & strong {
         color: $color-accent-secondary-dark;
     }

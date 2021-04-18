@@ -15,11 +15,18 @@ const MovieSchema = new mongoose.Schema({
         required: [ true, "Rating is required" ],
         enum: ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated']
     },
+    director: {
+        type: String,
+        required: [ true, "Director is required" ],
+    },
     genre: {
         type: String,
         required: [ true, "Genre is required" ],
     },
     plot: {
+        type: String
+    },
+    movieUrl: {
         type: String
     }
 }, { timestamps: true });
