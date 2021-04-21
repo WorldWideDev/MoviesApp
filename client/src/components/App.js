@@ -26,6 +26,7 @@ function App() {
     const [movies, setMovies] = useState([]);
     const [errors, setErrors] = useState([]);
     useEffect(() => {
+        setErrors([]);
         axios.get(API_URI)
             .then(res => setMovies(res.data));
     }, []);
@@ -77,8 +78,8 @@ function App() {
             <Navigation />
             <Router>
                 <MovieTable movies={movies} default />
-                <MovieForm errors={errors} onSubmitProp={createMovie} path="/movies/new" />
-                <MovieDetails errors={errors} onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
+                <MovieForm setErrors={setErrors} errors={errors} onSubmitProp={createMovie} path="/movies/new" />
+                <MovieDetails setErrors={setErrors} errors={errors} onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
             </Router>
         </div>
     )

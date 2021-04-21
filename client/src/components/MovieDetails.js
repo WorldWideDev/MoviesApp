@@ -5,18 +5,20 @@ import MovieForm from './MovieForm.js';
 import axios from 'axios';
 
 const MovieDetails = (props) => {
-    const { id, onSubmitProp, onDeleteProp, errors } = props;
+    const { id, onSubmitProp, onDeleteProp, errors, setErrors } = props;
     const [movie, setMovie] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     useEffect(() => {
-        axios.get(`${API_URI}/${id}`)
-            .then((res) => {
-                setMovie(res.data);
-            })
-            .catch((err) => {
-                console.log("uh oh", err);
-            });
-
+        const getMovie = () => {
+            axios.get(`${API_URI}/${id}`)
+                .then((res) => {
+                    setMovie(res.data);
+                })
+                .catch((err) => {
+                    console.log("uh oh", err);
+                });
+        }
+        getMovie();
     }, []);
     const deleteHandler = () => {
         const result = prompt("Type 'yes' to delete");
@@ -28,7 +30,7 @@ const MovieDetails = (props) => {
         return (isEditing)
             ? (
                 <section>
-                    <MovieForm movie={movie} errors={errors} onSubmitProp={onSubmitProp}>
+                    <MovieForm setErrors={setErrors} movie={movie} errors={errors} onSubmitProp={onSubmitProp}>
                         <button 
                             onClick={() => setIsEditing(false)}
                             className="btn btn-warning">Cancel</button>

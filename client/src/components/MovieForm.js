@@ -1,5 +1,5 @@
 import { navigate } from '@reach/router';
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 const getFormReadyDate = (date=null) => {
     const dt = (date === null) ? new Date() : new Date(date);
     return dt.toISOString().split('T')[0];
@@ -13,11 +13,17 @@ const INITIAL_MOVIE_STATE = {
 }
 // const RATINGS = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated'];
 const MovieForm = (props) => {
-    console.log("rendering movie form");
+
+    useEffect(() => {
+        return () => {
+            setErrors([]);
+        }
+    }, []);
+
     const initialState = (props.movie === undefined)
         ? INITIAL_MOVIE_STATE
         : {...props.movie, releaseDate:getFormReadyDate(props.movie.releaseDate)};
-    const { errors, onSubmitProp, children } = props;
+    const { setErrors, errors, onSubmitProp, isCreate, children } = props;
     const [movie, setMovie] = useState({...initialState});
     const {title, genre, releaseDate, rating, plot} = movie;
     function onInputChanged(field, value) {
