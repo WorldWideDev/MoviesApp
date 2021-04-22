@@ -5,10 +5,11 @@ import MovieForm from './MovieForm.js';
 import axios from 'axios';
 
 const MovieDetails = (props) => {
-    const { id, onSubmitProp, onDeleteProp, errors, setErrors } = props;
+    const { id, onSubmitProp, onDeleteProp, errors } = props;
     const [movie, setMovie] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     useEffect(() => {
+        console.log("Movie details loaded");
         const getMovie = () => {
             axios.get(`${API_URI}/${id}`)
                 .then((res) => {
@@ -19,18 +20,23 @@ const MovieDetails = (props) => {
                 });
         }
         getMovie();
-    }, []);
+    }, [id]);
     const deleteHandler = () => {
         const result = prompt("Type 'yes' to delete");
         if(result !== 'yes') { return; }
-        onDeleteProp(movie._id);
-        navigate('/');
+        axios.delete(`${API_URI}/${id}`)
+            .then((res) => {
+                navigate('/');
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     }
     const renderConditionalEdit = () => {
         return (isEditing)
             ? (
                 <section>
-                    <MovieForm setErrors={setErrors} movie={movie} errors={errors} onSubmitProp={onSubmitProp}>
+                    <MovieForm movie={movie} isCreate={false} >
                         <button 
                             onClick={() => setIsEditing(false)}
                             className="btn btn-warning">Cancel</button>

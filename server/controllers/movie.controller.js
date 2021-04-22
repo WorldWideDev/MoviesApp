@@ -40,6 +40,7 @@ module.exports = {
             .catch(err => res.status(400).json(err));
     },
     delete: (req, res) => {
+        console.log("delete:/" + req.params.id);
         Movie.findByIdAndDelete(req.params.id)
             .then(movie => res.json({id:movie._id}))
             .catch(err => res.json(err));

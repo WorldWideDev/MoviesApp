@@ -1,12 +1,17 @@
 import { navigate } from '@reach/router';
-import { useState, useEffect } from 'react';
+import axios from 'axios';
+import API_URI from '../utilities/apiUtils.js';
+import { useState } from 'react';
+
 const getFormReadyDate = (date=null) => {
     const dt = (date === null) ? new Date() : new Date(date);
     return dt.toISOString().split('T')[0];
 }
+
 const INITIAL_MOVIE_STATE = {
     title: '',
     genre: '',
+    director: '',
     plot: '',
     releaseDate: getFormReadyDate(),
     rating: ''
@@ -14,26 +19,48 @@ const INITIAL_MOVIE_STATE = {
 // const RATINGS = ['G', 'PG', 'PG-13', 'R', 'NC-17', 'Unrated'];
 const MovieForm = (props) => {
 
-    useEffect(() => {
-        return () => {
-            setErrors([]);
-        }
-    }, []);
-
     const initialState = (props.movie === undefined)
         ? INITIAL_MOVIE_STATE
         : {...props.movie, releaseDate:getFormReadyDate(props.movie.releaseDate)};
-    const { setErrors, errors, onSubmitProp, isCreate, children } = props;
+    const { isCreate, children } = props;
     const [movie, setMovie] = useState({...initialState});
-    const {title, genre, releaseDate, rating, plot} = movie;
+    const [errors, setErrors] = useState([]);
+    const {title, director, genre, releaseDate, rating, plot} = movie;
     function onInputChanged(field, value) {
+        console.log(field, value);
         setMovie({ ...movie, [field]:value});
+    }
+    const updateMovie = () => {
+        setErrors([]);
+        axios.put(`${API_URI}/${movie._id}`, movie)
+            .then(res => {
+                setErrors([]);
+                navigate('/');
+            })
+            .catch(err => {
+                setErrors(err.response.data.errors);
+            });
+    }
+    const createMovie = () => {
+        axios.post(API_URI, movie)
+            .then(res => {
+                console.log(res);
+                setErrors([]);
+                navigate('/');
+            })
+            .catch(err => {
+                console.log(err.response.data);
+                setErrors(err.response.data.errors);
+            });
     }
     function onSubmitHandler(e) {
         e.preventDefault();
-        onSubmitProp(movie);
-        if(errors.length < 1) { setMovie({...INITIAL_MOVIE_STATE}); }
-        //navigate('/');
+        if(isCreate) {
+            createMovie();
+        } else {
+            updateMovie();
+        }
+        // if(errors.length < 1) { setMovie({initialState}); }
     }
     return (
         <form onSubmit={(e) => onSubmitHandler(e)}>
@@ -41,6 +68,11 @@ const MovieForm = (props) => {
                 <label htmlFor="title">Title</label>
                 <span className="error">{ errors?.title?.message }</span>
                 <input className="form-control" type="text" id="title" value={title} onChange={(e) => onInputChanged('title', e.target.value)} />
+            </div>
+            <div className="form-group">
+                <label htmlFor="director">Director</label>
+                <span className="error">{ errors?.director?.message }</span>
+                <input className="form-control" type="text" id="director" value={director} onChange={(e) => onInputChanged('director', e.target.value)} />
             </div>
             <div className="form-group">
                 <label htmlFor="genre">Genre</label>

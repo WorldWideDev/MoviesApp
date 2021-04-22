@@ -1,7 +1,14 @@
+import API_URI from '../utilities/apiUtils.js';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 import { Link } from '@reach/router';
 const getFormattedDate = (date) => new Date(date).toLocaleDateString();
 const MovieTable = (props) => {
-    let { movies } = props;
+    const [movies, setMovies] = useState([]);
+    useEffect(() => {
+        axios.get(API_URI)
+            .then(res => setMovies(res.data));
+    }, []);
     return (
         <table className="table table-dark table-striped">
             <thead>

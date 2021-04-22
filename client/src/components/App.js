@@ -12,7 +12,6 @@ import '../styles/_main.scss';
 
 const typography = new Typography(funstonTheme);
 const moviesAreSame = (movieA, movieB) => {
-    console.log(movieA, movieB);
     return (
         movieA._id === movieB._id &&
         movieA.title === movieB.title &&
@@ -24,42 +23,10 @@ const moviesAreSame = (movieA, movieB) => {
 }
 function App() {
     const [movies, setMovies] = useState([]);
-    const [errors, setErrors] = useState([]);
     useEffect(() => {
-        setErrors([]);
         axios.get(API_URI)
             .then(res => setMovies(res.data));
     }, []);
-    const updateMovie = (movie) => {
-        const idx = movies.findIndex(m => m._id === movie._id);
-        if(moviesAreSame(movie, movies[idx])) { 
-            setErrors([]);
-            navigate('/');
-            return; 
-        }
-        axios.put(`${API_URI}/${movie._id}`, movie)
-            .then(res => {
-                const updatedMovies = [...movies];
-                updatedMovies[idx] = movie;
-                setErrors([]);
-                setMovies(updatedMovies);
-                navigate('/');
-            })
-            .catch(err => {
-                setErrors(err.response.data.errors);
-            });
-    }
-    const createMovie = (movie) => {
-        axios.post(API_URI, movie)
-            .then(res => {
-                setMovies([...movies, res.data]);
-                setErrors([]);
-                navigate('/');
-            })
-            .catch(err => {
-                setErrors(err.response.data.errors);
-            });
-    }
     const deleteHandler = (id) => {
         axios.delete(`${API_URI}/${id}`)
             .then((res) => {
@@ -78,8 +45,8 @@ function App() {
             <Navigation />
             <Router>
                 <MovieTable movies={movies} default />
-                <MovieForm setErrors={setErrors} errors={errors} onSubmitProp={createMovie} path="/movies/new" />
-                <MovieDetails setErrors={setErrors} errors={errors} onDeleteProp={deleteHandler} onSubmitProp={updateMovie} path="/movies/:id"/>
+                <MovieForm isCreate={true} path="/movies/new" />
+                <MovieDetails onDeleteProp={deleteHandler} path="/movies/:id"/>
             </Router>
         </div>
     )
