@@ -1,9 +1,7 @@
 import axios from 'axios';
 import Typography from 'typography';
 import funstonTheme from 'typography-theme-funston';
-import { useState, useEffect } from 'react';
 import { Router, navigate } from '@reach/router';
-import API_URI from '../utilities/apiUtils.js';
 import Navigation from './Navigation.js';
 import MovieForm from './MovieForm.js';
 import MovieDetails from './MovieDetails.js';
@@ -22,20 +20,6 @@ const moviesAreSame = (movieA, movieB) => {
     )
 }
 function App() {
-    const [movies, setMovies] = useState([]);
-    useEffect(() => {
-        axios.get(API_URI)
-            .then(res => setMovies(res.data));
-    }, []);
-    const deleteHandler = (id) => {
-        axios.delete(`${API_URI}/${id}`)
-            .then((res) => {
-                setMovies(movies.filter(m => m._id !== res.data.id));
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
     return (
         <div className="">
             <header>
